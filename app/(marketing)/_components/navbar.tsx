@@ -5,8 +5,10 @@ import { cn } from "@/lib/utils";
 import { Logo } from "./logo";
 import { ModeToggle } from "@/components/mode-toggle";
 import { useConvexAuth } from "convex/react";
-import { SignInButton } from "@clerk/nextjs";
+import { SignInButton, UserButton } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/spinner";
+import Link from "next/link";
 
 export const Navbar = () => {
   const { isAuthenticated, isLoading } = useConvexAuth();
@@ -23,7 +25,7 @@ export const Navbar = () => {
       <div className="md:ml-auto flex items-center gap-x-2">
         <ModeToggle />
 
-        {isLoading && <p>Loading...</p>}
+        {isLoading && (<Spinner />)}
 
         {!isAuthenticated && !isLoading && (
           <>
@@ -33,6 +35,19 @@ export const Navbar = () => {
             <SignInButton mode="modal">
               <Button size="sm">Get for free</Button>
             </SignInButton>
+          </>
+        )}
+        {isAuthenticated && !isLoading && (
+          <>
+          <Button variant="ghost" size="sm" asChild>
+            <Link href="/documents">
+            Enter much2share
+            </Link>
+
+          </Button>
+          <UserButton afterSignOutUrl="/" />
+
+         
           </>
         )}
       </div>

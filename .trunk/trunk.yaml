@@ -10,5 +10,6 @@ plugins:
       ref: v1.6.2
       uri: https://github.com/trunk-io/plugins
 lint:
+  disabled:
+    - eslint
   enabled:
-    - eslint@8.57.0
