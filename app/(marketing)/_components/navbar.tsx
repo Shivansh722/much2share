@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 export const Navbar = () => {
   const { isAuthenticated, isLoading } = useConvexAuth();
   const scrolled = useScrollTop();
+
   return (
     <div
       className={cn(
@@ -19,16 +20,18 @@ export const Navbar = () => {
       )}
     >
       <Logo />
-      <div className="md:ml-auto md:justify-end justify-between w-full flex items-center gap-x-2">
+      <div className="md:ml-auto flex items-center gap-x-2">
         <ModeToggle />
-      </div>
-      <div className="md:ml-auto md:justify-end justify-between w-full flex items-center gap-x-2">
+
         {isLoading && <p>Loading...</p>}
 
         {!isAuthenticated && !isLoading && (
           <>
             <SignInButton mode="modal">
-              <Button>LogIn</Button>
+              <Button variant="ghost" size="sm">Log In</Button>
+            </SignInButton>
+            <SignInButton mode="modal">
+              <Button size="sm">Get for free</Button>
             </SignInButton>
           </>
         )}
