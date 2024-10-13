@@ -25,7 +25,7 @@ const DocumentsPage = () => {
                 className="dark:hidden"
             />
             
-            <h2>
+            <h2 className="text-lg font-medium">
                 Welcome to {firstName}&apos;s Meet2share
             </h2>
             <Button>
