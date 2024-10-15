@@ -6,15 +6,16 @@ import { usePathname } from "next/navigation";
 import { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { UserItem } from "./user-item";
-import { useQuery } from "convex/react";
+import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { MenuItem } from "./item";
-
+import { toast } from "sonner";
 
 export const Navigation = () => {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const pathname = usePathname();
   const documents = useQuery(api.documents.get);
+  const create = useMutation(api.documents.create); // Use useMutation here
   const isResizingRef = useRef(false);
   const sidebarRef = useRef<ElementRef<"aside">>(null);
   const navbarRef = useRef<ElementRef<"div">>(null);
@@ -87,6 +88,16 @@ export const Navigation = () => {
     }
   };
 
+  const handleCreate = () => {
+    const promise = create({ title: "Untitled" });
+
+    toast.promise(promise, {
+      loading: "Note Created...",
+      success: "Document created",
+      error: "Error creating document",
+    });
+  };
+
   return (
     <>
       <aside
@@ -110,7 +121,8 @@ export const Navigation = () => {
 
         <div>
           <UserItem />
-          <MenuItem onClick={() => {}} label="New Page" icon={PlusCircle} />
+          
+          <MenuItem onClick={handleCreate} label="New Page" icon={PlusCircle} /> {/* Using handleCreate */}
           <MenuItem onClick={() => {}} label="Search" icon={Search} isSearch />
         </div>
 
