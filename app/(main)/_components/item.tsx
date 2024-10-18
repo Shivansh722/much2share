@@ -1,13 +1,16 @@
 "use client";
 
+import { Skeleton } from "@/components/ui/skeleton";
+import { Id } from "@/convex/_generated/dataModel";
 import { LucideIcon, ChevronDown, ChevronRight} from "lucide-react";
 
 interface MenuItemProps {
+    id?: Id<"documents">;
     label: string;
     onClick: () => void;
     icon: LucideIcon;
     active?: boolean;
-    documentIcon?: JSX.Element;
+    documentIcon?: string;
     isSearch?: boolean;
     level?: number;
     onExpand?: () => void;
@@ -57,4 +60,16 @@ export const MenuItem = ({
             )}
         </div>
     );
+}
+
+MenuItem.Skeleton = function ItemSkeleton( {level}: {level?: number}) {
+    return (
+        <div
+        style={({ paddingLeft: level ? `${(level * 12) + 12}px` : "12px" })}
+        className="flex gap-x-2 py-[3px]"
+        >
+            <Skeleton className="h-4 w-4" />
+            <Skeleton className="h-4 w-[30%]" />
+        </div>
+    )
 }

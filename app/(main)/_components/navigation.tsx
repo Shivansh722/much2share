@@ -10,6 +10,7 @@ import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { MenuItem } from "./item";
 import { toast } from "sonner";
+import { DocumentList } from "./documnent-list";
 
 export const Navigation = () => {
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -128,7 +129,7 @@ export const Navigation = () => {
         </div>
 
         <div className="mt-4">
-          
+          <DocumentList />
         </div>
 
         <div
