@@ -112,7 +112,7 @@ export const MenuItem = ({
       {!!id && (
         <div
           role="button"
-          onClick={onClick}
+          onClick={onCreate}
           className="ml-auto flex items-center gap-x-2"
         >
           <div className="opacity-0 group-hover:opacity-100 h-full rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600">
