@@ -1,6 +1,14 @@
+"use client";
+
 import { Skeleton } from "@/components/ui/skeleton";
+import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
-import { LucideIcon, ChevronDown, ChevronRight } from "lucide-react";
+import { useMutation } from "convex/react";
+
+import { LucideIcon, ChevronDown, ChevronRight, Plus, Router } from "lucide-react";
+import { useRouter } from "next/router";
+import React from "react";
+import { toast } from "sonner";
 
 interface MenuItemProps {
   id?: Id<"documents">;
@@ -27,6 +35,8 @@ export const MenuItem = ({
   onExpand,
   expanded = false,
 }: MenuItemProps) => {
+    const router = useRouter();
+    const create = useMutation(api.documents.create);
 
     const handleExpand = (
         event: React.MouseEvent<HTMLDivElement, MouseEvent>
@@ -35,6 +45,29 @@ export const MenuItem = ({
         onExpand?.();
     }
 
+    const onCreate = (
+        event: React.MouseEvent<HTMLDivElement, MouseEvent>
+        ) => {
+        if(!id) {
+            return;
+        }
+
+        const promise = create({title:  "Untitled", parentDocument: id})
+        .then((documentId) => {
+            if( !expanded) {
+                onExpand?.();
+            }
+            router.push(`/documents/${documentId}`);
+        });
+
+        toast.promise(promise, {
+            loading: "Creating document...",
+            success: "Document created",
+            error: "Failed to create document",
+        });
+
+    }
+    
 
   const ChevronIcon = expanded ? ChevronDown : ChevronRight;
 
@@ -42,15 +75,14 @@ export const MenuItem = ({
     <div
       role="button"
       style={{ paddingLeft: level ? `${(level * 12) + 12}px` : "12px" }}
-      className={`group relative min-h-[27px] text-sm py-1 pr-3 w-full hover:bg-primary/5 flex items-center text-muted-foreground font-medium ${active ? 'bg-primary/5 text-primary' : ''}`}
+      className={`group relative min-h-[27px] text-sm py-1 pr-3 w-full hover:bg-primary/5 flex items-center justify-between text-muted-foreground font-medium ${active ? 'bg-primary/5 text-primary' : ''}`}
     >
-      {/* Render the expand/collapse icon */}
-      {!!id &&  (
+      {/* Render the expand/collapse icon on the left */}
+      {!!id && (
         <div
           role="button"
-          className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
           onClick={handleExpand}
-          
+          className="mr-2 cursor-pointer"
         >
           <ChevronIcon className="h-4 w-4 shrink-0 text-muted-foreground/50" />
         </div>
@@ -75,9 +107,19 @@ export const MenuItem = ({
           <span className="text-xs">CMD</span>
         </kbd>
       )}
-      {
-        
-      }
+
+      {/* Render the Plus icon on the right */}
+      {!!id && (
+        <div
+          role="button"
+          onClick={onClick}
+          className="ml-auto flex items-center gap-x-2"
+        >
+          <div className="opacity-0 group-hover:opacity-100 h-full rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600">
+            <Plus className="h-4 w-4 text-muted-foreground" />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
