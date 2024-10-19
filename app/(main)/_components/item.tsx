@@ -48,6 +48,7 @@ export const MenuItem = ({
     const onCreate = (
         event: React.MouseEvent<HTMLDivElement, MouseEvent>
         ) => {
+        event.stopPropagation();
         if(!id) {
             return;
         }
@@ -57,7 +58,7 @@ export const MenuItem = ({
             if( !expanded) {
                 onExpand?.();
             }
-            router.push(`/documents/${documentId}`);
+            // router.push(`/documents/${documentId}`); as it will give 404 as of now
         });
 
         toast.promise(promise, {
