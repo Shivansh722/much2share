@@ -3,12 +3,15 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
+import { DropdownMenu, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import { useMutation } from "convex/react";
 
 import { LucideIcon, ChevronDown, ChevronRight, Plus, Router } from "lucide-react";
 import { useRouter } from "next/router";
 import React from "react";
 import { toast } from "sonner";
+
+
 
 interface MenuItemProps {
   id?: Id<"documents">;
@@ -116,6 +119,11 @@ export const MenuItem = ({
           onClick={onCreate}
           className="ml-auto flex items-center gap-x-2"
         >
+            <DropdownMenu>
+
+                </ DropdownMenu>
+
+
           <div className="opacity-0 group-hover:opacity-100 h-full rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600">
             <Plus className="h-4 w-4 text-muted-foreground" />
           </div>
