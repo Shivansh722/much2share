@@ -35,7 +35,7 @@ export const MenuItem = ({
   onExpand,
   expanded = false,
 }: MenuItemProps) => {
-    const router = useRouter();
+    // const router = useRouter();
     const create = useMutation(api.documents.create);
 
     const handleExpand = (
